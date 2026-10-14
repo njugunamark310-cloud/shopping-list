@@ -100,3 +100,8 @@ button hover {
         padding: 20px;
     }
 }
+
+#shopping-list li.purchased span {
+    text-decoration: line-through;
+    color: rgb(233, 5, 5);
+}
