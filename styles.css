@@ -19,3 +19,21 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 
 }
+
+h1 {
+    text-align: center;
+    color: #198754;
+    margin-bottom: 10px;
+}
+
+p {
+    text-align: center;
+    color:#101010;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+}
