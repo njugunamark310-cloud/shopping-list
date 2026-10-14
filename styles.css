@@ -86,3 +86,17 @@ button hover {
     background-color: #6fdc35;
     margin-top: 15px;
 }
+
+#clear-list:hover {
+    background-color: hsl(83, 70%, 44%);
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 20px 10px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+}
