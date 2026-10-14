@@ -60,3 +60,29 @@ button {
     font-size: 16px;
     cursor: pointer;
 }
+
+button hover {
+    background-color: #8dae14;
+}
+
+#shopping-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 8px;
+    background-color: #f8f9fa;
+    border-radius: 6px
+
+}
+
+#total-cost {
+     margin-top: 20px;
+    font-weight: bold;
+    color: #318c62;
+}
+
+#clear-list {
+    background-color: #6fdc35;
+    margin-top: 15px;
+}
