@@ -4,49 +4,120 @@ const itemName = document.querySelector("#item-name");
 const itemPrice = document.querySelector("#item-price");
 const shoppingList = document.querySelector("#shopping-list");
 const totalCost = document.querySelector("#total-cost");
-// corrected area
-let items = [];
 
+
+let items = JSON.parse(localStorage.getItem("shoppingItems")) || [];
+
+
+function saveItems() {
+    localStorage.setItem("shoppingItems", JSON.stringify(items));
+}
+//improved and corrected areas 
+// Display items from the array
+function renderItems() {
+    shoppingList.innerHTML = "";
+    let total = 0;
+
+    items.forEach(function (item, index) {
+        const li = document.createElement("li");
+
+        const itemDetails = document.createElement("span");
+        itemDetails.textContent =
+            `${item.name} - KSh ${item.price.toFixed(2)}`;
+
+        const purchaseButton = document.createElement("button");
+        purchaseButton.type = "button";
+        purchaseButton.textContent = item.purchased
+            ? "Purchased!!"
+            : "Mark as Purchased";
+
+        li.classList.toggle("purchased", item.purchased);
+
+        // Mark or unmarked items
+        purchaseButton.addEventListener("click", function () {
+            item.purchased = !item.purchased;
+            saveItems();
+            renderItems();
+        });
+
+        // Edit an item's name and the prices
+        const editButton = document.createElement("button");
+        editButton.type = "button";
+        editButton.textContent = "Edit";
+
+        editButton.addEventListener("click", function () {
+            const newName = prompt("Enter item name:", item.name);
+
+            if (newName === null || newName.trim() === "") {
+                return;
+            }
+
+            const newPrice = prompt("Enter item price:", item.price);
+
+            if (newPrice === null || newPrice.trim() === "") {
+                return;
+            }
+
+            if (isNaN(newPrice) || Number(newPrice) < 0) {
+                alert("Enter a valid price.");
+                return;
+            }
+
+            item.name = newName.trim();
+            item.price = Number(newPrice);
+
+            saveItems();
+            renderItems();
+        });
+
+        li.appendChild(itemDetails);
+        li.appendChild(purchaseButton);
+        li.appendChild(editButton);
+        shoppingList.appendChild(li);
+
+        // Add purchased items to the total items
+        if (item.purchased) {
+            total += item.price;
+        }
+    });
+
+    totalCost.textContent = total.toFixed(2);
+}
+
+// Adding a new item 
 form.addEventListener("submit", function (event) {
     event.preventDefault();
 
     const name = itemName.value.trim();
     const price = Number(itemPrice.value);
 
-    const li = document.createElement("li");
+    if (name === "") {
+        alert("Enter an item name.");
+        return;
+    }
 
-    const itemDetails = document.createElement("span");
-    itemDetails.textContent = `${name} - KSh ${price.toFixed(2)}`;
+    if (itemPrice.value.trim() === "" || isNaN(price) || price < 0) {
+        alert("Enter a valid price.");
+        return;
+    }
 
-    const purchaseButton = document.createElement("button");
-    purchaseButton.type = "button";
-    purchaseButton.textContent = "Mark as Purchased";
-
-     purchaseButton.addEventListener("click", function () {
-        const purchased = li.classList.toggle("purchased");
-
-        if (purchased) {
-            total += price;
-            purchaseButton.textContent = "Purchased!";
-        } else {
-            total -= price;
-            purchaseButton.textContent = "Mark as Purchased";
-        }
-
-        totalCost.textContent = total.toFixed(2);
+    items.push({
+        name: name,
+        price: price,
+        purchased: false
     });
 
-    li.appendChild(itemDetails);
-    li.appendChild(purchaseButton);
-    shoppingList.appendChild(li);
-
-     form.reset();
+    saveItems();
+    renderItems();
+    form.reset();
 });
 
+// Clear all items
+clearButton.addEventListener("click", function () {
+    items = [];
+    saveItems();
+    renderItems();
+});
 
-clearButton.onclick = function () {
-    shoppingList.innerHTML = "";
-    total = 0;
-    totalCost.textContent = "0.00";
-};
-
+// Display saved items when the page loads(corrected)
+renderItems();
