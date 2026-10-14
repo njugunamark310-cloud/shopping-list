@@ -13,3 +13,31 @@ form.addEventListener("submit", function (event) {
     const price = Number(itemPrice.value);
 
     const li = document.createElement("li");
+
+    const itemDetails = document.createElement("span");
+    itemDetails.textContent = `${name} - KSh ${price.toFixed(2)}`;
+
+    const purchaseButton = document.createElement("button");
+    purchaseButton.type = "button";
+    purchaseButton.textContent = "Mark as Purchased";
+
+     purchaseButton.addEventListener("click", function () {
+        const purchased = li.classList.toggle("purchased");
+
+        if (purchased) {
+            total += price;
+            purchaseButton.textContent = "Purchased ✓";
+        } else {
+            total -= price;
+            purchaseButton.textContent = "Mark as Purchased";
+        }
+
+        totalCost.textContent = total.toFixed(2);
+    });
+
+    li.appendChild(itemDetails);
+    li.appendChild(purchaseButton);
+    shoppingList.appendChild(li);
+
+     form.reset();
+});
