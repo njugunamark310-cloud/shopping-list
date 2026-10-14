@@ -1,3 +1,4 @@
+const clearButton = document.querySelector("#clear-list");
 const form = document.querySelector("#item-form");
 const itemName = document.querySelector("#item-name");
 const itemPrice = document.querySelector("#item-price");
@@ -26,7 +27,7 @@ form.addEventListener("submit", function (event) {
 
         if (purchased) {
             total += price;
-            purchaseButton.textContent = "Purchased ✓";
+            purchaseButton.textContent = "Purchased !!!";
         } else {
             total -= price;
             purchaseButton.textContent = "Mark as Purchased";
@@ -41,3 +42,11 @@ form.addEventListener("submit", function (event) {
 
      form.reset();
 });
+
+
+clearButton.onclick = function () {
+    shoppingList.innerHTML = "";
+    total = 0;
+    totalCost.textContent = "0.00";
+};
+
