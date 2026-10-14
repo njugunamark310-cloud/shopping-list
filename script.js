@@ -4,8 +4,8 @@ const itemName = document.querySelector("#item-name");
 const itemPrice = document.querySelector("#item-price");
 const shoppingList = document.querySelector("#shopping-list");
 const totalCost = document.querySelector("#total-cost");
-
-let total = 0;
+// corrected area
+let items = [];
 
 form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -27,7 +27,7 @@ form.addEventListener("submit", function (event) {
 
         if (purchased) {
             total += price;
-            purchaseButton.textContent = "Purchased !!!";
+            purchaseButton.textContent = "Purchased!";
         } else {
             total -= price;
             purchaseButton.textContent = "Mark as Purchased";
